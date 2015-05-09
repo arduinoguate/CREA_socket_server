@@ -32,7 +32,6 @@ class WebSocketUser{
     if ($session->validate_basic_token($key, $_POST, 'GET')){
       $this->authenticated = true;
       $this->username = $session->username;
-      $this->message = implode(" ", $session->response);
       return true;
     }else
       return false;
