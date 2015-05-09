@@ -34,6 +34,8 @@ class echoServer extends WebSocketServer {
         }else{
           $message = $this->frame('ERR-001',$user);
           $result = @socket_write($user->socket, $message, strlen($message));
+          $message = $this->frame('MSG',$user->message,$user);
+          $result = @socket_write($user->socket, $message, strlen($message));
         }
       }
     }else{

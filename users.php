@@ -20,6 +20,7 @@ class WebSocketUser{
   public $authenticated = false;
   public $username = "";
   public $module = "";
+  public $message = "";
 
   function __construct($id, $socket) {
     $this->id = $id;
@@ -31,6 +32,7 @@ class WebSocketUser{
     if ($session->validate_basic_token($key, $_POST, 'GET')){
       $this->authenticated = true;
       $this->username = $session->username;
+      $this->message = $session->response;
       return true;
     }else
       return false;
