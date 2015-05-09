@@ -253,6 +253,7 @@ class SESSION extends GCConfig
 				$this->response['type'] = 'error';
 				$this->response['code'] = 401;
 				$this->response['message'] = $this->err;
+        print_r($this->response);
 				return false;
 			}
 		}catch(Exception $e){
