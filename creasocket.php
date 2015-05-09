@@ -27,6 +27,7 @@ class echoServer extends WebSocketServer {
       $command = explode("|",$message);
       if (count($command)>1 && $command[0] == 'CRAUTH'){
         if ($user->authenticate($command[1])){
+          $this->stdout("> $command[1]");
           $message = $this->frame('ACK',$user);
           $result = @socket_write($user->socket, $message, strlen($message));
           $message = $this->frame('USR'.$user->username,$user);
