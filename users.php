@@ -22,7 +22,6 @@ class WebSocketUser{
   public $module = "";
 
   function __construct($id, $socket) {
-    parent::__construct();
     $this->id = $id;
     $this->socket = $socket;
   }
