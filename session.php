@@ -243,6 +243,7 @@ class SESSION extends GCConfig
 
 	public function validate_basic_token($token, $params = array(), $method){
 		try{
+      $this->token = $token;
 	    $this->_scopes = (isset($params['scopes']) && $params['scopes'] != '')?$params['scopes']:'';
   		if ($this->validate_basic($params) && $this->validate_scopes($method)){
 				$this->response['code'] = 200;
@@ -253,7 +254,6 @@ class SESSION extends GCConfig
 				$this->response['type'] = 'error';
 				$this->response['code'] = 401;
 				$this->response['message'] = $this->err;
-        print_r($this->response);
 				return false;
 			}
 		}catch(Exception $e){
