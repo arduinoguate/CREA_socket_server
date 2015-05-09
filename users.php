@@ -28,7 +28,7 @@ class WebSocketUser{
 
   public function authenticate($key){
     $session = new SESSION();
-    if ($session->validate_basic_token($_SERVER['HTTP_Authorization'], $_POST, 'GET')){
+    if ($session->validate_basic_token($key, $_POST, 'GET')){
       $this->authenticated = true;
       $this->username = $session->username;
       return true;

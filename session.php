@@ -4,7 +4,7 @@ include_once 'config/config.php';
 
 class SESSION extends GCConfig
 {
-  const BASIC = 'Basic ';
+  const BASIC = '';
   const BEARER = 'Bearer ';
 
 	protected $token;
@@ -120,7 +120,7 @@ class SESSION extends GCConfig
 
 	private function sanitize_token($token, $type){
 		$this->token = str_replace($type, '', $token);
-        return (strpos($token,$type) !== false);
+      return (strpos($token,$type) !== false);
 	}
 
 	private function validate_token($token){

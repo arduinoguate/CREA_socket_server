@@ -29,6 +29,8 @@ class echoServer extends WebSocketServer {
         if ($user->authenticate($command[1])){
           $message = $this->frame('ACK',$user);
           $result = @socket_write($user->socket, $message, strlen($message));
+          $message = $this->frame('USR'.$user->username,$user);
+          $result = @socket_write($user->socket, $message, strlen($message));
         }else{
           $message = $this->frame('ERR-001',$user);
           $result = @socket_write($user->socket, $message, strlen($message));
