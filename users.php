@@ -31,6 +31,8 @@ class WebSocketUser{
     if ($session->validate_basic_token($_SERVER['HTTP_Authorization'], $_POST, 'GET')){
       $this->authenticated = true;
       $this->username = $session->username;
-    }
+      return true;
+    }else
+      return false;
   }
 }
