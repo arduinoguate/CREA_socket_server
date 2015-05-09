@@ -243,26 +243,18 @@ class SESSION extends GCConfig
 
 	public function validate_basic_token($token, $params = array(), $method){
 		try{
-			if ($this->sanitize_token($token, self::BASIC)){
-    		    $this->_scopes = (isset($params['scopes']) && $params['scopes'] != '')?$params['scopes']:'';
-        		if ($this->validate_basic($params) && $this->validate_scopes($method)){
-    				$this->response['code'] = 200;
-    				$this->response['access_token'] = $this->generate_token();
-    				$this->response['expires'] = ((strtotime($this->api_token->columns['updated_at'])*1000)+$this->api_token->columns['expires']) - (time()*1000);
-    				return true;
-    			}else{
-    				$this->response['type'] = 'error';
-    				$this->response['code'] = 401;
-    				$this->response['message'] = $this->err;
-    				return false;
-    			}
+	    $this->_scopes = (isset($params['scopes']) && $params['scopes'] != '')?$params['scopes']:'';
+  		if ($this->validate_basic($params) && $this->validate_scopes($method)){
+				$this->response['code'] = 200;
+				$this->response['access_token'] = $this->generate_token();
+				$this->response['expires'] = ((strtotime($this->api_token->columns['updated_at'])*1000)+$this->api_token->columns['expires']) - (time()*1000);
+				return true;
 			}else{
 				$this->response['type'] = 'error';
-    		    $this->response['code'] = 401;
-    			$this->response['message'] = 'Malformed token';
+				$this->response['code'] = 401;
+				$this->response['message'] = $this->err;
 				return false;
 			}
-
 		}catch(Exception $e){
 			$this->response['type'] = 'error';
 			$this->response['code'] = 401;
