@@ -116,10 +116,10 @@ class SESSION extends GCConfig
         $this->actions->set_ipp(1);
         $acciones = $this->actions->fetch("modulo_id = '$mid' AND TRIM(ultimo_valor) <> '' ");
 
-        $this->response = "<NA>";
+        $this->response = "NA";
 
         foreach ($acciones as $accion) {
-          $this->response = "<".$accion->columns['comando']."|".$accion->columns['ultimo_valor'].">";
+          $this->response = "".$accion->columns['comando']."|".$accion->columns['ultimo_valor']."";
           if ($this->actions->fetch_id(array("id" => $accion->columns['id']))) {
             $status = 'OPERATED';
 
@@ -129,10 +129,10 @@ class SESSION extends GCConfig
             $this->actions->columns['updated_at'] = date("Y-m-d H:i:s");
 
             if (!$this->actions->update()) {
-              $this->response = '<UPD_ERR>';
+              $this->response = 'UPD_ERR';
             }
           }else{
-            $this->response = '<ERR>';
+            $this->response = 'ERR';
           }
         }
 
@@ -147,10 +147,10 @@ class SESSION extends GCConfig
         $this->modulo->columns['updated_at'] = date("Y-m-d H:i:s");
 
         if (!$this->modulo->update()) {
-          $this->response = '<UPD_M_ERR>';
+          $this->response = 'UPD_M_ERR';
         }
       }else{
-        $this->response = '<MOD_ERR>';
+        $this->response = 'MOD_ERR';
       }
     }
   }
