@@ -139,6 +139,7 @@ class SESSION extends GCConfig
         if (isset($reply) && $reply != ''){
           $this->modulo->columns['estado'] = "REPLIED";
           $this->modulo->columns['last_response'] = $reply;
+          $this->response = "ACK";
         }else{
           $this->modulo->columns['estado'] = $status;
         }
