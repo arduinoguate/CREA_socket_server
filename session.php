@@ -154,7 +154,7 @@ class SESSION extends GCConfig
       }
     }
   }
-  
+
   //PRIVATE METHODS
 
   private function validate_module_id_only($id) {
@@ -163,11 +163,7 @@ class SESSION extends GCConfig
 
     $result = $this->modulo->fetch("id = '$id'");
     if (count($result) <= 0) {
-      $this->response['type'] = 'error';
-      $this->response['title'] = 'Modulo-i';
-      $this->response['message'] = 'El dispositivo no existe';
-      $this->response['code'] = 2;
-      $this->response['http_code'] = 422;
+      $this->response = 'El dispositivo no existe';
     } else {
       $validation = true;
     }
