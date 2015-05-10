@@ -52,9 +52,11 @@ class WebSocketUser{
 
   public function process(){
     $this->session->api_what($this->module);
+    $this->message = $this->session->response;
   }
 
   public function send($value){
     $this->session->api_what($this->module, $value);
+    $this->message = $this->session->response;
   }
 }
