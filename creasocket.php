@@ -67,14 +67,14 @@ class echoServer extends WebSocketServer {
         if (count($command)>0){
           switch ($command[0]) {
             case 'GET':
-              $user->process();
-              $message = $this->frame($user->message,$user);
+              $message = $user->process();
+              $message = $this->frame($message,$user);
               $result = @socket_write($user->socket, $message, strlen($message));
               break;
             case 'SEND':
               if (count($command)>1){
-                $user->send($command[1]);
-                $message = $this->frame($user->message,$user);
+                $message = $user->send($command[1]);
+                $message = $this->frame($message,$user);
                 $result = @socket_write($user->socket, $message, strlen($message));
               }else{
                 $message = $this->frame('ERR-004',$user);
