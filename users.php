@@ -18,22 +18,43 @@ class WebSocketUser{
   public $hasSentClose = false;
 
   public $authenticated = false;
+  public $subscribed = false;
   public $username = "";
   public $module = "";
   public $message = "";
 
+  public $session;
+
   function __construct($id, $socket) {
     $this->id = $id;
     $this->socket = $socket;
+    $this->session = new SESSION();
   }
 
   public function authenticate($key){
-    $session = new SESSION();
-    if ($session->validate_basic_token($key, $_POST, 'GET')){
+    if ($this->session->validate_basic_token($key)){
       $this->authenticated = true;
-      $this->username = $session->username;
+      $this->username = $this->session->username;
       return true;
     }else
       return false;
+  }
+
+  public function subscribe($module){
+    if ($this->session->validate_module($module, $this->username)){
+      $this->subscribed = true;
+      $this->module = $module;
+      return true;
+    }else{
+      return false;
+    }
+  }
+
+  public function process(){
+    $this->session->api_what($this->module);
+  }
+
+  public function send($value){
+    $this->session->api_what($this->module, $value);
   }
 }
