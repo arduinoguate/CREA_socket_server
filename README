@@ -28,4 +28,6 @@ START THE PROYECT
 
 Run the following code:
 
-`nohup php5 creasocket.php & disown`
+```
+nohup php5 creasocket.php & disown
+```
