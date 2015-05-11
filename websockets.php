@@ -63,7 +63,7 @@ abstract class WebSocketServer {
         else {
           $numBytes = @socket_recv($socket,$buffer,$this->maxBufferSize,0);
           if ($numBytes === false) {
-            throw new Exception('Socket error: ' . socket_strerror(socket_last_error($socket)));
+            $this->stdout('Socket error: ' . socket_strerror(socket_last_error($socket)));
           }
           elseif ($numBytes == 0) {
             $this->disconnect($socket);
