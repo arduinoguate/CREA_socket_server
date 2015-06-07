@@ -324,6 +324,7 @@ abstract class WebSocketServer {
     $frame_id=1;
 
     while($frame_pos<$length) {
+      $this->stdout("frame_pos: ".$frame_pos.', length: '.$length);
       $headers = $this->extractHeaders($packet);
       $headers_size = $this->calcoffset($headers);
       $framesize=$headers['length']+$headers_size;
@@ -334,14 +335,14 @@ abstract class WebSocketServer {
 
       if (($message = $this->deframe($frame, $user,$headers)) !== FALSE) {
         if ($user->hasSentClose) {
-	  $this->disconnect($user);
-	} else {
-	  if (mb_check_encoding($message,'UTF-8')) {
-	    //$this->stdout("Is UTF-8\n".$message);
-	    $this->process($user, $message);
-	  } else {
-	    $this->stdout("not UTF-8\n");
-	  }
+	        $this->disconnect($user);
+        } else {
+          if (mb_check_encoding($message,'UTF-8')) {
+	           //$this->stdout("Is UTF-8\n".$message);
+	           $this->process($user, $message);
+	        } else {
+	           $this->stdout("not UTF-8\n");
+          }
         }
       }
       //get the new position also modify packet data
