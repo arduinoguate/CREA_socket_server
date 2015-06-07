@@ -318,7 +318,7 @@ abstract class WebSocketServer {
     if ($user->handlingPartialPacket) {
       $packet = $user->partialBuffer . $packet;
       $user->handlingPartialPacket = false;
-      $length=strlen(trim($packet));
+      $length=strlen($packet);
     }
     $fullpacket=$packet;
     $frame_pos=0;
@@ -333,6 +333,7 @@ abstract class WebSocketServer {
 
       //split frame from packet and process it
       $frame=substr($fullpacket,$frame_pos,$framesize);
+      $this->stdout(" | frame_str: ".$frame);
 
       if (($message = $this->deframe($frame, $user,$headers)) !== FALSE) {
         if ($user->hasSentClose) {
