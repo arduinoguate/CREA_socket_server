@@ -318,7 +318,7 @@ abstract class WebSocketServer {
     if ($user->handlingPartialPacket) {
       $packet = $user->partialBuffer . $packet;
       $user->handlingPartialPacket = false;
-      $length=strlen($packet);
+      $length=strlen(trim($packet));
     }
     $fullpacket=$packet;
     $frame_pos=0;
