@@ -336,6 +336,7 @@ abstract class WebSocketServer {
       $this->stdout(" | frame_str: ".$frame);
 
       if (($message = $this->deframe($frame, $user,$headers)) !== FALSE) {
+        $this->stdout(" | deframed_msg: ".$message);
         if ($user->hasSentClose) {
 	        $this->disconnect($user);
         } else {
