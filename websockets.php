@@ -419,6 +419,7 @@ abstract class WebSocketServer {
     }
     if (extension_loaded('mbstring')) {
       if ($headers['length'] > mb_strlen($this->applyMask($headers,$payload))) {
+        $this->stdout("EXTLOAD | lenght: ".$headers['length'].', unmasked: '.$this->applyMask($headers,$payload).', unmasked_size: '.mb_strlen($this->applyMask($headers,$payload)));
         $user->handlingPartialPacket = true;
         $user->partialBuffer = $message;
         return false;
@@ -426,6 +427,7 @@ abstract class WebSocketServer {
     }
     else {
       if ($headers['length'] > strlen($this->applyMask($headers,$payload))) {
+        $this->stdout("ELSE | lenght: ".$headers['length'].', unmasked: '.$this->applyMask($headers,$payload).', unmasked_size: '.mb_strlen($this->applyMask($headers,$payload)));
         $user->handlingPartialPacket = true;
         $user->partialBuffer = $message;
         return false;
