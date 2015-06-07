@@ -313,6 +313,7 @@ abstract class WebSocketServer {
 
   //check packet if he have more than one frame and process each frame individually
   protected function split_packet($length,$packet, $user) {
+    $this->stdout("packet to split: ".$packet);
     //add PartialPacket and calculate the new $length
     if ($user->handlingPartialPacket) {
       $packet = $user->partialBuffer . $packet;
@@ -324,11 +325,11 @@ abstract class WebSocketServer {
     $frame_id=1;
 
     while($frame_pos<$length) {
-      $this->stdout("frame_pos: ".$frame_pos.', length: '.$length);
+      $this->stdout(" | frame_pos: ".$frame_pos.', length: '.$length);
       $headers = $this->extractHeaders($packet);
       $headers_size = $this->calcoffset($headers);
       $framesize=$headers['length']+$headers_size;
-      $this->stdout("frame #".$frame_id." position : ".$frame_pos." msglen : ".$headers['length']." + headers_size ".$headers_size." = framesize of ".$framesize);
+      $this->stdout(" | frame #".$frame_id." position : ".$frame_pos." msglen : ".$headers['length']." + headers_size ".$headers_size." = framesize of ".$framesize);
 
       //split frame from packet and process it
       $frame=substr($fullpacket,$frame_pos,$framesize);
