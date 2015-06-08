@@ -59,4 +59,10 @@ class WebSocketUser{
     $this->session->api_what($this->module, $value);
     return $this->session->response;
   }
+
+  public function disconnect(){
+    if ($this->subscribed){
+      $this->session->disconnect_module($this->module);
+    }
+  }
 }

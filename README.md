@@ -23,7 +23,7 @@ Opera 12.10
 
 Android Browser 4.4
 
-START THE PROYECT
+START THE PROJECT
 -----------------
 
 Run the following code:
