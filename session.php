@@ -103,8 +103,32 @@ class SESSION extends GCConfig
 
   public function validate_module($eid=null, $token=''){
     if ($this->modulo_asoc->fetch_id(array('idusuario'=>$token, 'modulo_id'=>$eid)))
-      return true;
+      if ($this->modulo->fetch_id(array("id" => $eid))) {
+        $this->modulo->columns['estado'] = "ONLINE";
+        $this->modulo->columns['tipo_modulo'] = $this->modulo->columns['tipo_modulo']['idtipo_modulo'];
+        $this->modulo->columns['updated_at'] = date("Y-m-d H:i:s");
+        if (!$this->modulo->update()) {
+          return false;
+        }else{
+          return true;
+        }
+      }else
+        return false;
     else
+      return false;
+  }
+
+  public function disconnect_module($eid=null){
+    if ($this->modulo->fetch_id(array("id" => $eid))) {
+      $this->modulo->columns['estado'] = "OFFLINE";
+      $this->modulo->columns['tipo_modulo'] = $this->modulo->columns['tipo_modulo']['idtipo_modulo'];
+      $this->modulo->columns['updated_at'] = date("Y-m-d H:i:s");
+      if (!$this->modulo->update()) {
+        return false;
+      }else{
+        return true;
+      }
+    }else
       return false;
   }
 
