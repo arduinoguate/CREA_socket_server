@@ -143,7 +143,7 @@ class SESSION extends GCConfig
         $this->response = "NA";
 
         foreach ($acciones as $accion) {
-          $this->response = "".$accion->columns['comando'].",".$accion->columns['tipo_respuesta']['id']."|".$accion->columns['ultimo_valor']."";
+          $this->response = "".$accion->columns['comando'].",".$accion->columns['id']."|".$accion->columns['ultimo_valor']."";
           if ($this->actions->fetch_id(array("id" => $accion->columns['id']))) {
             $status = 'OPERATED';
 
