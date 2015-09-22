@@ -193,7 +193,7 @@ class SESSION extends GCConfig
 
     $result = $this->modulo->fetch("id = '$id'");
     if (count($result) <= 0) {
-      $this->response = 'El dispositivo no existe';
+      $this->response = 'ERR-006'; //'El dispositivo no existe';
     } else {
       $validation = true;
     }
@@ -207,7 +207,7 @@ class SESSION extends GCConfig
 
     $result = $this->actions->fetch("id = '$id'");
     if (count($result) <= 0) {
-      $this->response = 'El dispositivo no existe';
+      $this->response = 'ERR-005'; //'Accion incorrecta no existe';
     } else {
       $validation = true;
     }
