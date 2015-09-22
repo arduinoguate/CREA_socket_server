@@ -55,8 +55,8 @@ class WebSocketUser{
     return $this->session->response;
   }
 
-  public function send($value){
-    $this->session->api_what($this->module, $value);
+  public function send($action, $value){
+    $this->session->api_what($this->module, $value, $action);
     return $this->session->response;
   }
 

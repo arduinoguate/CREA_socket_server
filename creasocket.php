@@ -73,8 +73,8 @@ class echoServer extends WebSocketServer {
               $result = @socket_write($user->socket, $message, strlen($message));
               break;
             case 'SEND':
-              if (count($command)>1){
-                $message = $user->send($command[1]);
+              if (count($command)>2){
+                $message = $user->send($command[1], $command[2]);
                 $message = $this->frame($message,$user);
                 $result = @socket_write($user->socket, $message, strlen($message));
               }else{

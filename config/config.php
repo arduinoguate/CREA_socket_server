@@ -114,6 +114,10 @@
 			$key_tact = array('idtipo_action');
 			$this->tipo_action = new DBManager($this->connection, 'tipo_action', $col_tact, $key_tact);
 
+			$col_tres = array('id', 'nombre_es', 'nombre_en', 'detalle_es', 'detalle_en', 'enabled', 'created_at');
+			$key_tres = array('id');
+			$this->tipo_respuesta = new DBManager($this->connection, 'tipo_respuesta', $col_tres, $key_tres);
+
 			$col_mod = array('id', 'nombre', 'tipo_modulo', 'estado', 'last_response', 'created_at', 'updated_at', 'enabled');
 			$key_mod = array('id');
 			$foreign_mod = array('tipo_modulo' => array('tipo_modulo','idtipo_modulo', $this->tipo_modulo));
@@ -139,7 +143,8 @@
 			$col_act = array('id', 'nombre', 'tipo_accion', 'comando', 'ultimo_valor', 'input', 'modulo_id', 'enabled', 'created_at', 'updated_at');
 			$key_act= array('id');
 			$foreign_act = array('tipo_accion' => array('tipo_action','idtipo_action', $this->tipo_action),
-				'modulo_id' => array('modulo','id', $this->modulo));
+				'modulo_id' => array('modulo','id', $this->modulo),
+				'tipo_respuesta' => array('tipo_respuesta','id', $this->tipo_respuesta));
 			$this->actions = new DBManager($this->connection, 'actions', $col_act, $key_act, $foreign_act);
 
 		}

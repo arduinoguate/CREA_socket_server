@@ -132,7 +132,7 @@ class SESSION extends GCConfig
       return false;
   }
 
-  public function api_what($mid, $reply = '') {
+  public function api_what($mid, $reply = '', $action = null) {
     if ($this->validate_module_id_only($mid)){
       if ($this->modulo->fetch_id(array("id" => $mid))) {
         $status = 'IDLE';
@@ -143,13 +143,14 @@ class SESSION extends GCConfig
         $this->response = "NA";
 
         foreach ($acciones as $accion) {
-          $this->response = "".$accion->columns['comando']."|".$accion->columns['ultimo_valor']."";
+          $this->response = "".$accion->columns['comando'].",".$accion->columns['tipo_respuesta']['id']."|".$accion->columns['ultimo_valor']."";
           if ($this->actions->fetch_id(array("id" => $accion->columns['id']))) {
             $status = 'OPERATED';
 
             $this->actions->columns['ultimo_valor'] = "";
             $this->actions->columns['modulo_id'] = $this->actions->columns['modulo_id']['id'];
             $this->actions->columns['tipo_accion'] = $this->actions->columns['tipo_accion']['idtipo_action'];
+            $this->actions->columns['tipo_respuesta'] = $this->actions->columns['tipo_respuesta']['id'];
             $this->actions->columns['updated_at'] = date("Y-m-d H:i:s");
 
             if (!$this->actions->update()) {
@@ -161,9 +162,13 @@ class SESSION extends GCConfig
         }
 
         if (isset($reply) && $reply != ''){
-          $this->modulo->columns['estado'] = "REPLIED";
-          $this->modulo->columns['last_response'] = $reply;
-          $this->response = "ACK";
+          if ($this->validate_action_id_only($action)){
+            $this->modulo->columns['estado'] = "REPLIED";
+            $this->modulo->columns['last_response'] = $reply;
+            $this->response = "ACK";
+
+            //TODO Here is where I should add the response historic save
+          }
         }else{
           $this->modulo->columns['estado'] = $status;
         }
@@ -187,6 +192,20 @@ class SESSION extends GCConfig
     $validation = false;
 
     $result = $this->modulo->fetch("id = '$id'");
+    if (count($result) <= 0) {
+      $this->response = 'El dispositivo no existe';
+    } else {
+      $validation = true;
+    }
+
+    return $validation;
+  }
+
+  private function validate_action_id_only($id) {
+
+    $validation = false;
+
+    $result = $this->actions->fetch("id = '$id'");
     if (count($result) <= 0) {
       $this->response = 'El dispositivo no existe';
     } else {
